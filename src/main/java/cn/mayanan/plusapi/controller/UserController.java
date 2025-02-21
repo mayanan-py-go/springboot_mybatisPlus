@@ -48,6 +48,12 @@ public class UserController {
         userService.deleteUser(id);
         return "用户删除成功";
     }
+
+    // 分页查询
+    @GetMapping("/page")
+    public List<User> getUserPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        return userService.getUserPage(pageNum, pageSize).getRecords();
+    }
 }
 
 

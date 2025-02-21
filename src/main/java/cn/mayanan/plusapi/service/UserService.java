@@ -2,6 +2,8 @@ package cn.mayanan.plusapi.service;
 
 import cn.mayanan.plusapi.mapper.UserMapper;
 import cn.mayanan.plusapi.model.User;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -35,4 +37,24 @@ public class UserService {
     public void deleteUser(Integer id) {
         userMapper.deleteById(id);
     }
+
+    // 分页查询
+    public Page<User> getUserPage(Integer pageNum, Integer pageSize) {
+        // 创建分页对象
+        Page<User> page = new Page<>(pageNum, pageSize);
+        // 查询条件
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("age", 18);
+        // 分页查询
+        return userMapper.selectPage(page, queryWrapper);
+    }
 }
+
+
+
+
+
+
+
+
+
