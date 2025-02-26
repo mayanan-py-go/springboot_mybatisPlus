@@ -2,7 +2,10 @@ package cn.mayanan.plusapi.controller;
 
 
 import cn.mayanan.plusapi.model.User;
+import cn.mayanan.plusapi.controller.LoginRequest;
 import cn.mayanan.plusapi.service.UserService;
+import cn.mayanan.plusapi.utils.JwtUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +54,27 @@ public class UserController {
 
     // 分页查询
     @GetMapping("/page")
-    public List<User> getUserPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-        return userService.getUserPage(pageNum, pageSize).getRecords();
+    public Page<User> getUserPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        // getRecords: 获取当前页的数据
+        // getTotal: 获取总记录数
+        // return userService.getUserPage(pageNum, pageSize).getRecords();
+        return userService.getUserPage(pageNum, pageSize);
+    }
+
+    // 用户登录
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        boolean success = userService.login(loginRequest.getName(), loginRequest.getPassword());
+        System.out.println("success");
+        System.out.println(success);
+        if (success) {
+            // 登录成功，生成token
+            String token = JwtUtil.genAccessToken(loginRequest.getName());
+            System.out.println("token: " + token);
+            return new LoginResponse("success", token);
+        } else {
+            return new LoginResponse("fail", null);
+        }
     }
 }
 

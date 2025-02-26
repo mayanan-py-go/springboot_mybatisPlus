@@ -44,9 +44,17 @@ public class UserService {
         Page<User> page = new Page<>(pageNum, pageSize);
         // 查询条件
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge("age", 18);
+        queryWrapper.gt("age", 18);
         // 分页查询
         return userMapper.selectPage(page, queryWrapper);
+    }
+
+    // 用户登录
+    public boolean login(String name, String password) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name).eq("password", password);
+        User user = userMapper.selectOne(queryWrapper);
+        return user != null;
     }
 }
 
