@@ -76,6 +76,21 @@ public class UserController {
             return new LoginResponse("fail", null);
         }
     }
+
+    // 用户和部门关联查询
+    @GetMapping("/userAndDepartment")
+    public User getUserAndDepartment(@RequestParam Integer id) {
+        User user = userService.getUserAndDepartment(id);
+        System.out.println("===================");
+        System.out.println(user);
+        System.out.println("===================");
+        return user;
+    }
+    // 查询多个用户以及对应的部门数据
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
 }
 
 

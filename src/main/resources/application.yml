@@ -9,8 +9,9 @@ spring:
   mybatis-plus:
     configuration:
       map-underscore-to-camel-case: true # ??????????????????
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # ??sql??
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 使用标准输出打印 SQL
     type-aliases-package: cn.mayanan.plusapi.model
+    mapper-locations: classpath:mapper/*.xml
   jpa:
     hibernate:
       # ddl-auto: update  # ???????????????????

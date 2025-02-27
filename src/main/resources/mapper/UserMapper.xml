@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.mayanan.plusapi.mapper.UserMapper">
+    <resultMap id="UserWithDepartmentResultMap" type="cn.mayanan.plusapi.model.User">
+        <id column="user_id" property="id"/>
+        <result column="user_name" property="name"/>
+        <result column="user_age" property="age" />
+        <result column="user_password" property="password" />
+        <association property="depart" javaType="cn.mayanan.plusapi.model.Department">
+            <id column="dep_id" property="id"/>
+            <result column="dep_name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="getUseById" resultMap="UserWithDepartmentResultMap" parameterType="int">
+        select
+            u.id as user_id,
+            u.name as user_name,
+            u.age as user_age,
+            u.password as user_password,
+            d.id as dep_id,
+            d.name as dep_name
+        from
+            user02 as u
+        left join
+            department as d
+        on
+            u.department_id = d.id
+        where
+            u.id = #{id}
+    </select>
+<!--    查询多个用户及对应的部门数据-->
+    <select id="getUsers" resultMap="UserWithDepartmentResultMap">
+        select
+            u.id as user_id,
+            u.name as user_name,
+            u.age as user_age,
+            u.password as user_password,
+            d.id as dep_id,
+            d.name as dep_name
+        from
+            user02 as u
+                left join
+            department as d
+        on
+            u.department_id = d.id
+    </select>
+</mapper>
+
+
+
+
+
+
+
+

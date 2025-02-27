@@ -56,6 +56,15 @@ public class UserService {
         User user = userMapper.selectOne(queryWrapper);
         return user != null;
     }
+
+    // 关联查询用户和部门
+    public User getUserAndDepartment(int id) {
+        return userMapper.getUseById(id);
+    }
+    // 查询多个用户以及对应的部门数据
+    public List<User> getUsers() {
+        return userMapper.getUsers();
+    }
 }
 
 
